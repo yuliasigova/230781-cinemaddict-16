@@ -1,7 +1,7 @@
 # Проект «Киноман»
 
 * Студент: [yulya sigova](https://up.htmlacademy.ru/ecmascript/16/user/230781).
-* Наставник: `Неизвестно`.
+* Наставник: [Игорь Казанцев](https://htmlacademy.ru/profile/id572311).
 
 ---
 
