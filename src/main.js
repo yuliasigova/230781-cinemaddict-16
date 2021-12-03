@@ -31,8 +31,6 @@ const films = Array.from({length: FILM_COUNT}, generateFilm);
 for (let i = 0; i < FILM_COUNT_PER_STEP ; i++) {
   filmContainer.insertAdjacentHTML('beforeend', createFilmElement(films[i]));
 }
-const filmPopupElement = document.querySelectorAll('.film-card__link');
-
 
 const removePopup = () => {
   const cardPopup = document.querySelector('.film-details');
@@ -40,14 +38,16 @@ const removePopup = () => {
   closePopupButton.addEventListener('click', () => cardPopup.remove()
   );
 };
-
-filmPopupElement.forEach((element) => element.addEventListener('click', () => {
-  const film = films.find((filmElement)=>filmElement.id === Number(element.currentTarget.dataset.id));
-  siteFooterElement.insertAdjacentHTML('afterend', createFilmPopupElement(film));
-  removePopup();
-}
-));
-
+const addPopup = () => {
+  const filmPopupElement = document.querySelectorAll('.film-card__link');
+  filmPopupElement.forEach((element) => element.addEventListener('click', () => {
+    const film = films.find((filmElement)=>filmElement.id === Number(element.dataset.id));
+    siteFooterElement.insertAdjacentHTML('afterend', createFilmPopupElement(film));
+    removePopup();
+  })
+  );
+};
+addPopup();
 const loadMoreButton = filmListElement.querySelector('.films-list__show-more');
 
 let renderedFilmCount = FILM_COUNT_PER_STEP;
@@ -58,6 +58,7 @@ loadMoreButton.addEventListener('click', (evt) => {
     .slice(renderedFilmCount, renderedFilmCount + FILM_COUNT_PER_STEP)
     .forEach((film) => filmContainer.insertAdjacentHTML('beforeend', createFilmElement(film)));
   renderedFilmCount += FILM_COUNT_PER_STEP;
+  addPopup();
   if (renderedFilmCount >= films.length) {
     loadMoreButton.remove();
   }
@@ -68,4 +69,3 @@ const filterWatchedFilm = filterWatchedList(films);
 const filterWatchFilm = filterWatchList(films);
 
 siteMainElement.insertAdjacentHTML('afterbegin', createMenuTemplate(filterWatchedFilm, filterWatchFilm,filterFavoriteFilm));
-
