@@ -1,9 +1,10 @@
 import dayjs from 'dayjs';
+import { createElement } from '../render';
 
 const createDescription = (description) => description.length > 140 ? `${description.slice(0, 139)}...` : description;
 
 
-export const createFilmElement = (film) => {
+const createFilmElement = (film) => {
   const {id, title, poster, description, rating, date, time, genre, isWatchlist, isWatched, isFavorite, comments} = film;
   const activeClassName = (status) => status ? 'film-card__controls-item--active': '';
   return `<article class="film-card">
@@ -26,3 +27,28 @@ export const createFilmElement = (film) => {
   </div>
 </article>`;
 };
+
+export default class FilmView {
+  #element = null;
+  #film = null;
+
+  constructor(film) {
+    this.#film = film;
+  }
+
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
+    }
+
+    return this.#element;
+  }
+
+  get template() {
+    return createFilmElement(this.#film);
+  }
+
+  removeElement() {
+    this.#element = null;
+  }
+}

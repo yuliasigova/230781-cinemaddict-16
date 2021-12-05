@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { createElement } from '../render';
 
 const createGenresContent = (genres) => genres.map((genre) => `<span class="film-details__genre">${genre}</span>`).join('');
 
@@ -19,7 +20,7 @@ const addComments = (comments) => comments.map(({author, date, text, emotion}) =
 
 const createGenre = (genre) => genre.length > 1 ? 'Genres' : 'Genre';
 
-export const createFilmPopupElement = (film) => {
+const createFilmPopupElement = (film) => {
   const {title, originalTitle, poster, description, rating, director, writer, country, ageRating, actor, time, date, genre, isWatchlist, isWatched, isFavorite, comments} = film;
 
   const activeClassName = (status) => status ? 'film-details__control-button--active': '';
@@ -135,3 +136,28 @@ export const createFilmPopupElement = (film) => {
   </form>
 </section>`;
 };
+
+export default class FilmPopupView {
+  #element = null;
+  #film = null;
+
+  constructor(film) {
+    this.#film = film;
+  }
+
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
+    }
+
+    return this.#element;
+  }
+
+  get template() {
+    return createFilmPopupElement(this.#film);
+  }
+
+  removeElement() {
+    this.#element = null;
+  }
+}
