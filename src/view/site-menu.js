@@ -1,4 +1,6 @@
-export const createMenuTemplate = (watchlistCount, historyCount, favoriteCount) =>
+import { createElement } from '../render';
+
+const createMenuTemplate = (watchlistCount, historyCount, favoriteCount) =>
   `<nav class="main-navigation">
     <div class="main-navigation__items">
       <a href="#all" class="main-navigation__item main-navigation__item--active">All movies</a>
@@ -10,10 +12,33 @@ export const createMenuTemplate = (watchlistCount, historyCount, favoriteCount) 
       ${favoriteCount.length}</span></a>
     </div>
     <a href="#stats" class="main-navigation__additional">Stats</a>
-  </nav>
+  </nav>`;
 
-  <ul class="sort">
-    <li><a href="#" class="sort__button sort__button--active">Sort by default</a></li>
-    <li><a href="#" class="sort__button">Sort by date</a></li>
-    <li><a href="#" class="sort__button">Sort by rating</a></li>
-  </ul>`;
+export default class MenuView {
+    #element = null;
+    #watchlistCount = null;
+    #historyCount = null;
+    #favoriteCount = null;
+
+    constructor(watchlistCount, historyCount, favoriteCount) {
+      this.#watchlistCount = watchlistCount;
+      this.#historyCount = historyCount;
+      this.#favoriteCount = favoriteCount;
+    }
+
+    get element() {
+      if (!this.#element) {
+        this.#element = createElement(this.template);
+      }
+
+      return this.#element;
+    }
+
+    get template() {
+      return createMenuTemplate(this.#watchlistCount, this.#historyCount, this.#favoriteCount);
+    }
+
+    removeElement() {
+      this.#element = null;
+    }
+}
