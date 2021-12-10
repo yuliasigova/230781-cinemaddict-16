@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { createElement } from '../render';
+import AbstractView from './abstract-view.js';
 
 const createDescription = (description) => description.length > 140 ? `${description.slice(0, 139)}...` : description;
 
@@ -28,27 +28,25 @@ const createFilmElement = (film) => {
 </article>`;
 };
 
-export default class FilmView {
-  #element = null;
+export default class FilmView extends AbstractView{
   #film = null;
 
   constructor(film) {
+    super();
     this.#film = film;
-  }
-
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-
-    return this.#element;
   }
 
   get template() {
     return createFilmElement(this.#film);
   }
 
-  removeElement() {
-    this.#element = null;
+  setFilmClickHandler = (callback) => {
+    this._callback.filmClick = callback;
+    this.element.querySelector('.film-card__link').addEventListener('click', this.#filmClickHandler);
+  }
+
+  #filmClickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.filmClick();
   }
 }

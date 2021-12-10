@@ -1,4 +1,4 @@
-import { createElement } from '../render.js';
+import AbstractView from './abstract-view.js';
 
 const createUserLogoTemplate = () =>
   `<section class="header__profile profile">
@@ -6,22 +6,11 @@ const createUserLogoTemplate = () =>
     <img class="profile__avatar" src="images/bitmap@2x.png" alt="Avatar" width="35" height="35">
   </section>`;
 
-export default class UserLogoView {
-  #element = null;
-
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-
-    return this.#element;
-  }
+export default class UserLogoView extends AbstractView {
 
   get template() {
     return createUserLogoTemplate();
   }
 
-  removeElement() {
-    this.#element = null;
-  }
+
 }
