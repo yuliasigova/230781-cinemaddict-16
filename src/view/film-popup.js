@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { createElement } from '../render';
+import ParentView from './abstract-view.js';
 
 const createGenresContent = (genres) => genres.map((genre) => `<span class="film-details__genre">${genre}</span>`).join('');
 
@@ -137,27 +137,25 @@ const createFilmPopupElement = (film) => {
 </section>`;
 };
 
-export default class FilmPopupView {
-  #element = null;
+export default class FilmPopupView extends ParentView {
   #film = null;
 
   constructor(film) {
+    super();
     this.#film = film;
-  }
-
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-
-    return this.#element;
   }
 
   get template() {
     return createFilmPopupElement(this.#film);
   }
 
-  removeElement() {
-    this.#element = null;
+  setPopupClickHandler = (callback) => {
+    this._callback.popupClick = callback;
+    this.element.querySelector('.film-details__close-btn').addEventListener('click', this.#popupClickHandler);
+  }
+
+  #popupClickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.popupClick();
   }
 }

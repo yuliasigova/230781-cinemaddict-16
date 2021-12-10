@@ -1,4 +1,4 @@
-import { createElement } from '../render';
+import ParentView from './abstract-view.js';
 
 const createSortTemplate = () =>
   `<ul class="sort">
@@ -7,22 +7,8 @@ const createSortTemplate = () =>
     <li><a href="#" class="sort__button">Sort by rating</a></li>
   </ul>`;
 
-export default class SortView {
-  #element = null;
-
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-
-    return this.#element;
-  }
-
+export default class SortView extends ParentView {
   get template() {
     return createSortTemplate();
-  }
-
-  removeElement() {
-    this.#element = null;
   }
 }

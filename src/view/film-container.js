@@ -1,4 +1,4 @@
-import { createElement } from '../render';
+import ParentView from './abstract-view.js';
 
 const createFilmsContainerElement = () =>
   `<section class="films">
@@ -8,22 +8,9 @@ const createFilmsContainerElement = () =>
     </section>
   </section>`;
 
-export default class FilmsContainerView {
-  #element = null;
-
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-
-    return this.#element;
-  }
-
+export default class FilmsContainerView extends ParentView {
   get template() {
     return createFilmsContainerElement();
   }
 
-  removeElement() {
-    this.#element = null;
-  }
 }
