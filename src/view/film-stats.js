@@ -1,8 +1,8 @@
-import AbstractView from './abstract-view.js';
+import ParentView from './abstract-view.js';
 
 const createFilmStatisticElement = (films) => `<p>${films} movies inside</p>`;
 
-export default class FilmStatisticiew extends AbstractView {
+export default class FilmStatisticiew extends ParentView {
   #films = null;
 
   constructor(films){

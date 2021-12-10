@@ -1,4 +1,4 @@
-import AbstractView from './abstract-view.js';
+import ParentView from './abstract-view.js';
 
 const createSortTemplate = () =>
   `<ul class="sort">
@@ -7,7 +7,7 @@ const createSortTemplate = () =>
     <li><a href="#" class="sort__button">Sort by rating</a></li>
   </ul>`;
 
-export default class SortView extends AbstractView {
+export default class SortView extends ParentView {
   get template() {
     return createSortTemplate();
   }

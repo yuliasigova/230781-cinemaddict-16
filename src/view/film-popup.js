@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import AbstractView from './abstract-view.js';
+import ParentView from './abstract-view.js';
 
 const createGenresContent = (genres) => genres.map((genre) => `<span class="film-details__genre">${genre}</span>`).join('');
 
@@ -137,7 +137,7 @@ const createFilmPopupElement = (film) => {
 </section>`;
 };
 
-export default class FilmPopupView extends AbstractView{
+export default class FilmPopupView extends ParentView {
   #film = null;
 
   constructor(film) {

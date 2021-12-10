@@ -1,4 +1,4 @@
-import AbstractView from './view/abstract-view.js';
+import ParentView from './view/abstract-view.js';
 
 export const RenderPosition = {
   BEFOREBEGIN: 'beforebegin',
@@ -8,8 +8,8 @@ export const RenderPosition = {
 };
 
 export const render = (container, element, place) => {
-  const parent = container instanceof AbstractView ? container.element : container;
-  const child = element instanceof AbstractView ? element.element : element;
+  const parent = container instanceof ParentView ? container.element : container;
+  const child = element instanceof ParentView ? element.element : element;
   switch (place) {
     case RenderPosition.BEFOREBEGIN:
       parent.before(child);

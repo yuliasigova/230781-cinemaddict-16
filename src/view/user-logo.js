@@ -1,4 +1,4 @@
-import AbstractView from './abstract-view.js';
+import ParentView from './abstract-view.js';
 
 const createUserLogoTemplate = () =>
   `<section class="header__profile profile">
@@ -6,11 +6,10 @@ const createUserLogoTemplate = () =>
     <img class="profile__avatar" src="images/bitmap@2x.png" alt="Avatar" width="35" height="35">
   </section>`;
 
-export default class UserLogoView extends AbstractView {
+export default class UserLogoView extends ParentView {
 
   get template() {
     return createUserLogoTemplate();
   }
-
 
 }

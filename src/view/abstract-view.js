@@ -1,12 +1,12 @@
 import { createElement } from '../render';
 
-export default class AbstractView {
+export default class ParentView {
   #element = null;
   _callback = {};
 
   constructor() {
-    if (new.target === AbstractView) {
-      throw new Error('Can\'t instantiate AbstractView, only concrete one.');
+    if (new.target === ParentView) {
+      throw new Error('Can\'t instantiate ParentView, only concrete one.');
     }
   }
 

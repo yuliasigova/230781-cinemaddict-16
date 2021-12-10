@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import AbstractView from './abstract-view.js';
+import ParentView from './abstract-view.js';
 
 const createDescription = (description) => description.length > 140 ? `${description.slice(0, 139)}...` : description;
 
@@ -28,7 +28,7 @@ const createFilmElement = (film) => {
 </article>`;
 };
 
-export default class FilmView extends AbstractView{
+export default class FilmView extends ParentView {
   #film = null;
 
   constructor(film) {

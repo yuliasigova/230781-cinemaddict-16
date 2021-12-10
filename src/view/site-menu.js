@@ -1,4 +1,4 @@
-import AbstractView from './abstract-view.js';
+import ParentView from './abstract-view.js';
 
 const createMenuTemplate = (watchlistCount, historyCount, favoriteCount) =>
   `<nav class="main-navigation">
@@ -14,7 +14,7 @@ const createMenuTemplate = (watchlistCount, historyCount, favoriteCount) =>
     <a href="#stats" class="main-navigation__additional">Stats</a>
   </nav>`;
 
-export default class MenuView extends AbstractView{
+export default class MenuView extends ParentView {
     #watchlistCount = null;
     #historyCount = null;
     #favoriteCount = null;

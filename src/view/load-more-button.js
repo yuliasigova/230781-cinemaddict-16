@@ -1,10 +1,10 @@
-import AbstractView from './abstract-view.js';
+import ParentView from './abstract-view.js';
 
 const createLoadMoreButtonTemplate = () =>
   `<button class="films-list__show-more">
   Show more</button>`;
 
-export default class LoadMoreButtonView extends AbstractView {
+export default class LoadMoreButtonView extends ParentView {
   get template() {
     return createLoadMoreButtonTemplate();
   }
