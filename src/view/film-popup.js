@@ -158,4 +158,34 @@ export default class FilmPopupView extends ParentView {
     evt.preventDefault();
     this._callback.popupClick();
   }
+
+  setWatchlistPopupClickHandler = (callback) => {
+    this._callback.watchlistPopupClick = callback;
+    this.element.querySelector('.film-details__control-button--watchlist').addEventListener('click', this.#watchlistPopupClickHandler);
+  }
+
+  #watchlistPopupClickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.watchlistPopupClick();
+  }
+
+  setWatchedPopupClickHandler = (callback) => {
+    this._callback.watchedPopupClick = callback;
+    this.element.querySelector('.film-details__control-button--watched').addEventListener('click', this.#watchedPopupClickHandler);
+  }
+
+  #watchedPopupClickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.watchedPopupClick();
+  }
+
+  setFavoritePopupClickHandler = (callback) => {
+    this._callback.favoritePopupClick = callback;
+    this.element.querySelector('.film-details__control-button--favorite').addEventListener('click', this.#favoritePopupClickHandler);
+  }
+
+  #favoritePopupClickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.favoritePopupClick();
+  }
 }
