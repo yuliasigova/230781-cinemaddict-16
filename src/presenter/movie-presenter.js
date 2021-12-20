@@ -1,6 +1,7 @@
 import { render, RenderPosition } from '../render';
 import FilmView from '../view/film-card';
 import FilmPopupView from '../view/film-popup';
+import {isEscKey} from '../mock/util';
 
 export default class MoviePresenter {
   #filmListContainer = null;
@@ -76,14 +77,14 @@ export default class MoviePresenter {
   }
 
   #onEscKeyDown = (evt) => {
-    if (evt.key === 'Escape' || evt.key === 'Esc') {
+    if (isEscKey(evt)) {
       evt.preventDefault();
       this.#removeFilmPopup();
     }
   };
 
   #filmClickHandler = () => {
-    this.#hiddenPopup();
+    this.#clearPopup();
     this.#addFilmPopup();
   }
 
@@ -91,7 +92,7 @@ export default class MoviePresenter {
     this.#removeFilmPopup();
   }
 
-  #hiddenPopup = () => {
+  #clearPopup = () => {
     const popup = document.querySelector('.film-details');
     if (document.body.contains(popup)) {
       document.body.removeChild(popup);

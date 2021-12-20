@@ -1,4 +1,4 @@
-const createUserStatsTemplate = () =>
+export const createUserStatsTemplate = () =>
   `<section class="statistic">
   <p class="statistic__rank">
     Your rank
@@ -48,4 +48,4 @@ const createUserStatsTemplate = () =>
   </div>
 
 </section>`;
-createUserStatsTemplate();
+

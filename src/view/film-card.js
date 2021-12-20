@@ -1,5 +1,4 @@
 import dayjs from 'dayjs';
-//import { render } from '../render.js';
 import ParentView from './abstract-view.js';
 
 const createDescription = (description) => description.length > 140 ? `${description.slice(0, 139)}...` : description;

@@ -39,6 +39,8 @@ export const updateItem = (items, update) => {
   ];
 };
 
+export const isEscKey = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
+
 export const idNumber = createId();
 export const filterWatchList = (films) => films.filter((film) => film.isWatchlist);
 export const filterWatchedList = (films) => films.filter((film) => film.isWatched);

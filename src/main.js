@@ -4,6 +4,7 @@ import UserLogoView  from './view/user-logo';
 import MovieListPresenter from './presenter/movie-list-presenter';
 import { generateFilm } from './mock/film';
 import FilmStatisticiew from './view/film-stats';
+import { createUserStatsTemplate } from './view/user-statistic';
 import { filterFavoriteList, filterWatchedList, filterWatchList } from './mock/util';
 
 const FILM_COUNT = 30;
@@ -25,3 +26,4 @@ render(siteHeaderElement, new UserLogoView(), RenderPosition.BEFOREEND);
 render(siteMainElement, new FilterView(filterFavoriteFilm, filterWatchedFilm, filterWatchFilm), RenderPosition.AFTERBEGIN);
 render(containerStatsElement, new FilmStatisticiew(FILM_COUNT), RenderPosition.BEFOREEND);
 
+createUserStatsTemplate();
