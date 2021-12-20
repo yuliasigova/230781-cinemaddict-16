@@ -49,4 +49,34 @@ export default class FilmView extends ParentView {
     evt.preventDefault();
     this._callback.filmClick();
   }
+
+  setWatchlistButtonClickHandler = (callback) => {
+    this._callback.watchlistButtonClick = callback;
+    this.element.querySelector('.film-card__controls-item--add-to-watchlist').addEventListener('click', this.#watchlistButtonClickHandler);
+  }
+
+  #watchlistButtonClickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.watchlistButtonClick();
+  }
+
+  setWatchedButtonClickHandler = (callback) => {
+    this._callback.watchedButtonClick = callback;
+    this.element.querySelector('.film-card__controls-item--mark-as-watched').addEventListener('click', this.#watchedButtonClickHandler);
+  }
+
+  #watchedButtonClickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.watchedButtonClick();
+  }
+
+  setFavoriteButtonClickHandler = (callback) => {
+    this._callback.favoriteButtonClick = callback;
+    this.element.querySelector('.film-card__controls-item--favorite').addEventListener('click', this.#favoriteButtonClickHandler);
+  }
+
+  #favoriteButtonClickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.favoriteButtonClick();
+  }
 }

@@ -1,6 +1,6 @@
 import ParentView from './abstract-view.js';
 
-const createMenuTemplate = (watchlistCount, historyCount, favoriteCount) =>
+const createFilterTemplate = (watchlistCount, historyCount, favoriteCount) =>
   `<nav class="main-navigation">
     <div class="main-navigation__items">
       <a href="#all" class="main-navigation__item main-navigation__item--active">All movies</a>
@@ -14,7 +14,7 @@ const createMenuTemplate = (watchlistCount, historyCount, favoriteCount) =>
     <a href="#stats" class="main-navigation__additional">Stats</a>
   </nav>`;
 
-export default class MenuView extends ParentView {
+export default class FilterView extends ParentView {
     #watchlistCount = null;
     #historyCount = null;
     #favoriteCount = null;
@@ -27,6 +27,6 @@ export default class MenuView extends ParentView {
     }
 
     get template() {
-      return createMenuTemplate(this.#watchlistCount, this.#historyCount, this.#favoriteCount);
+      return createFilterTemplate(this.#watchlistCount, this.#historyCount, this.#favoriteCount);
     }
 }

@@ -25,6 +25,22 @@ const createId = ()=> {
   };
 };
 
+export const updateItem = (items, update) => {
+  const index = items.findIndex((item) => item.id === update.id);
+
+  if (index === -1) {
+    return items;
+  }
+
+  return [
+    ...items.slice(0, index),
+    update,
+    ...items.slice(index + 1),
+  ];
+};
+
+export const isEscKey = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
+
 export const idNumber = createId();
 export const filterWatchList = (films) => films.filter((film) => film.isWatchlist);
 export const filterWatchedList = (films) => films.filter((film) => film.isWatched);
