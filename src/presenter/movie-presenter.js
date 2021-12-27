@@ -79,6 +79,7 @@ export default class MoviePresenter {
   #onEscKeyDown = (evt) => {
     if (isEscKey(evt)) {
       evt.preventDefault();
+      this.#filmPopupComponent.reset(this.#film);
       this.#removeFilmPopup();
     }
   };
@@ -89,6 +90,7 @@ export default class MoviePresenter {
   }
 
   #popupClickHandler = () => {
+    this.#filmPopupComponent.reset(this.#film);
     this.#removeFilmPopup();
   }
 
