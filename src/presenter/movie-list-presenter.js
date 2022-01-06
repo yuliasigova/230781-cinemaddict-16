@@ -5,41 +5,40 @@ import FilmsContainerView from '../view/film-container';
 import FilmsListContainerView from '../view/film-list-container';
 import LoadMoreButtonView  from '../view/load-more-button';
 import MoviePresenter from './movie-presenter';
-import { updateItem } from '../mock/util';
 
 const FILM_COUNT_PER_STEP = 5;
 
 export default class MovieListPresenter {
   #mainContainer = null;
+  #filmsModel = null;
 
   #filmsComponent = new FilmsContainerView();
   #filmListComponent = new FilmsListContainerView();
   #sortComponent = new SortView();
   #emptyFilmComponent = new NoFilmView();
   #loadMoreButtonComponent = new LoadMoreButtonView();
-  #films = [];
   #renderedFilmCount = FILM_COUNT_PER_STEP;
   #moviePresenter = new Map();
 
-  constructor(mainContainer){
+  constructor(mainContainer, filmsModel){
     this.#mainContainer = mainContainer;
+    this.#filmsModel = filmsModel;
   }
 
-  init = (films) => {
-    this.#films = [...films];
-    if (this.#films.length === 0) {
-      this.#renderEmptyFilms();
-      return;
-    }
+  get films () {
+    return this.#filmsModel.films;
+  }
+
+  init = () => {
+    this.#renderBoard();
     render(this.#mainContainer, this.#sortComponent, RenderPosition.AFTERBEGIN);
     render(this.#mainContainer, this.#filmsComponent, RenderPosition.BEFOREEND);
     render(this.#filmsComponent.element.querySelector('.films-list'), this.#filmListComponent, RenderPosition.BEFOREEND);
-    this.#renderFilms(0, this.#renderedFilmCount);
+    this.#renderFilms(0,  this.#renderedFilmCount );
     this.#renderLoadMoreButton();
   }
 
   #handleFilmChange = (updatedFilm) => {
-    this.#films = updateItem(this.#films, updatedFilm);
     this.#moviePresenter.get(updatedFilm.id).init(updatedFilm);
   }
 
@@ -51,7 +50,7 @@ export default class MovieListPresenter {
 
 
   #renderFilms = (from, to) => {
-    this.#films
+    this.films
       .slice(from, to)
       .forEach((film) => this.#renderFilm(film));
   }
@@ -64,7 +63,7 @@ export default class MovieListPresenter {
     this.#renderFilms(this.#renderedFilmCount, this.#renderedFilmCount + FILM_COUNT_PER_STEP);
 
     this.#renderedFilmCount += FILM_COUNT_PER_STEP;
-    if (this.#renderedFilmCount >= this.#films.length) {
+    if (this.#renderedFilmCount >= this.films.length) {
       this.#loadMoreButtonComponent.element.remove();
       this.#loadMoreButtonComponent.removeElement();
     }
@@ -73,6 +72,12 @@ export default class MovieListPresenter {
   #renderLoadMoreButton = () => {
     render(this.#filmListComponent, this.#loadMoreButtonComponent, RenderPosition.AFTEREND);
     this.#loadMoreButtonComponent.setClickHandler(this.#handleLoadMoreButtonClick);
+  }
+
+  #renderBoard = () => {
+    if (this.films.length === 0) {
+      this.#renderEmptyFilms();
+    }
   }
 }
 
