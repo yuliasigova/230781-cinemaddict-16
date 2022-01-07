@@ -45,3 +45,13 @@ export const idNumber = createId();
 export const filterWatchList = (films) => films.filter((film) => film.isWatchlist);
 export const filterWatchedList = (films) => films.filter((film) => film.isWatched);
 export const filterFavoriteList = (films) => films.filter((film) => film.isFavorite);
+
+export const SortType = {
+  DEFAULT: 'default',
+  DATE: 'date',
+  RATING: 'rating',
+};
+
+export const sortFilmsDate = (films) => films.sort((a, b) => (a.date > b.date ? -1 : 1));
+
+export const sortFilmsRating = (films) => films.sort((a, b) => (a.rating > b.rating ? -1 : 1));

@@ -101,5 +101,12 @@ export default class MoviePresenter {
     }
   }
 
+  destroy = () => {
+    this.#filmComponent.element.remove();
+    this.#filmComponent.removeElement();
+    this.#filmPopupComponent.element.remove();
+    this.#filmPopupComponent.removeElement();
+  }
+
 }
 
