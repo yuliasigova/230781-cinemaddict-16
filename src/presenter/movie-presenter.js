@@ -1,7 +1,7 @@
-import { render, RenderPosition } from '../render';
+import { render, RenderPosition, remove} from '../render';
 import FilmView from '../view/film-card';
 import FilmPopupView from '../view/film-popup';
-import {isEscKey} from '../mock/util';
+import {isEscKey, UserAction, UpdateType} from '../mock/util';
 
 export default class MoviePresenter {
   #filmListContainer = null;
@@ -46,23 +46,27 @@ export default class MoviePresenter {
       document.body.replaceChild(this.#filmPopupComponent.element, prevFilmPopupComponent.element);
     }
 
-    prevFilmComponent.element.remove();
-    prevFilmComponent.removeElement();
-    prevFilmPopupComponent.element.remove();
-    prevFilmPopupComponent.removeElement();
+    remove(prevFilmComponent);
+    remove(prevFilmPopupComponent);
   }
 
   #watchlistClickHandler = () => {
-    this.#changeData({...this.#film, isWatchlist: !this.#film.isWatchlist});
+    this.#changeData(
+      UserAction.UPDATE_FILM,
+      UpdateType.PATCH,{...this.#film, isWatchlist: !this.#film.isWatchlist});
   }
 
   #watchedClickHandler = () => {
-    this.#changeData({...this.#film, isWatched: !this.#film.isWatched});
+    this.#changeData(
+      UserAction.UPDATE_FILM,
+      UpdateType.PATCH,{...this.#film, isWatched: !this.#film.isWatched});
   }
 
   #favoriteClickHandler = () => {
-    this.#changeData({...this.#film, isFavorite: !this.#film.isFavorite});
-  }
+    this.#changeData(
+      UserAction.UPDATE_FILM,
+      UpdateType.MINOR,{...this.#film, isFavorite: !this.#film.isFavorite});
+  };
 
   #addFilmPopup = () => {
     document.body.classList.add('hide-overflow');
@@ -102,10 +106,8 @@ export default class MoviePresenter {
   }
 
   destroy = () => {
-    this.#filmComponent.element.remove();
-    this.#filmComponent.removeElement();
-    this.#filmPopupComponent.element.remove();
-    this.#filmPopupComponent.removeElement();
+    remove(this.#filmComponent);
+    remove(this.#filmPopupComponent);
   }
 
 }

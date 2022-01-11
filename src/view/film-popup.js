@@ -231,3 +231,4 @@ export default class FilmPopupView extends SmartView {
   }
 }
 
+//новый презентер на попап и брать фильм по id
