@@ -41,12 +41,15 @@ export const sortFilmsRating = (films) => films.sort((a, b) => (a.rating > b.rat
 
 export const UserAction = {
   UPDATE_FILM: 'UPDATE_FILM',
+  ADD_COMMENT: 'ADD_COMMENT',
+  DELETE_COMMENT: 'DELETE_COMMENT',
 };
 
 export const UpdateType = {
   PATCH: 'PATCH',
   MINOR: 'MINOR',
   MAJOR: 'MAJOR',
+  INIT: 'INIT',
 };
 
 export const FilterType = {
@@ -62,3 +65,16 @@ export const filter = {
   [FilterType.HISTORY]: (films) => films.filter((film) => film.isWatched),
   [FilterType.FAVORITES]: (films) => films.filter((film) => film.isFavorite),
 };
+
+export const createTime = (time) => {
+  const hours = Math.floor(time/60);
+  const minutes = time%60;
+  return `${hours}h ${minutes}m`;
+};
+
+export const MenuItem = {
+  FILMS: 'FILMS',
+  STATISTICS: 'STATISTICS',
+};
+
+export const EMOTIONS =[ 'smile', 'sleeping', 'puke', 'angry'];

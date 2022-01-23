@@ -34,12 +34,15 @@ export default class FilterView extends ParentView {
     return createFilterTemplate(this.#filter, this.#currentFilter);
   }
 
-  setFilterTypeChangeHandler = (callback) => {
+  setFilterTypeClickHandler = (callback) => {
     this._callback.filterTypeChange = callback;
     this.element.addEventListener('click', this.#filterTypeChangeHandler);
   }
 
   #filterTypeChangeHandler = (evt) => {
+    if (evt.target.tagName !== 'A') {
+      return;
+    }
     evt.preventDefault();
     this._callback.filterTypeChange(evt.target.dataset.filterType);
   }
