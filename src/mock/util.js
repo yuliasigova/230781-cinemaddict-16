@@ -25,23 +25,56 @@ const createId = ()=> {
   };
 };
 
-export const updateItem = (items, update) => {
-  const index = items.findIndex((item) => item.id === update.id);
-
-  if (index === -1) {
-    return items;
-  }
-
-  return [
-    ...items.slice(0, index),
-    update,
-    ...items.slice(index + 1),
-  ];
-};
-
 export const isEscKey = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
 export const idNumber = createId();
-export const filterWatchList = (films) => films.filter((film) => film.isWatchlist);
-export const filterWatchedList = (films) => films.filter((film) => film.isWatched);
-export const filterFavoriteList = (films) => films.filter((film) => film.isFavorite);
+
+export const SortType = {
+  DEFAULT: 'default',
+  DATE: 'date',
+  RATING: 'rating',
+};
+
+export const sortFilmsDate = (films) => films.sort((a, b) => (a.date > b.date ? -1 : 1));
+
+export const sortFilmsRating = (films) => films.sort((a, b) => (a.rating > b.rating ? -1 : 1));
+
+export const UserAction = {
+  UPDATE_FILM: 'UPDATE_FILM',
+  ADD_COMMENT: 'ADD_COMMENT',
+  DELETE_COMMENT: 'DELETE_COMMENT',
+};
+
+export const UpdateType = {
+  PATCH: 'PATCH',
+  MINOR: 'MINOR',
+  MAJOR: 'MAJOR',
+  INIT: 'INIT',
+};
+
+export const FilterType = {
+  ALL: 'all',
+  FAVORITES: 'favorites',
+  HISTORY: 'history',
+  WATCHLIST: 'watchlist',
+};
+
+export const filter = {
+  [FilterType.ALL]: (films) => films.filter((film) => film),
+  [FilterType.WATCHLIST]: (films) => films.filter((film) => film.isWatchlist),
+  [FilterType.HISTORY]: (films) => films.filter((film) => film.isWatched),
+  [FilterType.FAVORITES]: (films) => films.filter((film) => film.isFavorite),
+};
+
+export const createTime = (time) => {
+  const hours = Math.floor(time/60);
+  const minutes = time%60;
+  return `${hours}h ${minutes}m`;
+};
+
+export const MenuItem = {
+  FILMS: 'FILMS',
+  STATISTICS: 'STATISTICS',
+};
+
+export const EMOTIONS =[ 'smile', 'sleeping', 'puke', 'angry'];

@@ -1,29 +1,42 @@
 import { render, RenderPosition } from './render';
-import FilterView from './view/film-filter';
 import UserLogoView  from './view/user-logo';
 import MovieListPresenter from './presenter/movie-list-presenter';
-import { generateFilm } from './mock/film';
 import FilmStatisticiew from './view/film-stats';
 import { createUserStatsTemplate } from './view/user-statistic';
-import { filterFavoriteList, filterWatchedList, filterWatchList } from './mock/util';
-
-const FILM_COUNT = 30;
-
-const films = Array.from({length: FILM_COUNT}, generateFilm);
-
-const filterFavoriteFilm = filterFavoriteList(films);
-const filterWatchedFilm = filterWatchedList(films);
-const filterWatchFilm = filterWatchList(films);
+import FilmsModel from './model/movies-model';
+import FilterModel from './model/filter-model';
+import CommentsModel from './model/comments-model';
+import FilterPresenter from './presenter/filter-presenter';
+import ApiService from './api-service';
 
 const siteMainElement = document.querySelector('.main');
 const siteHeaderElement = document.querySelector('.header');
 const containerStatsElement = document.querySelector('.footer__statistics');
 
-const movieListPresenter = new MovieListPresenter(siteMainElement);
+const AUTHORIZATION = 'Basic skvsjlsjYIGT67';
+const END_POINT = 'https://16.ecmascript.pages.academy/cinemaddict';
 
-movieListPresenter.init(films);
+const filmsModel = new FilmsModel((new ApiService(END_POINT, AUTHORIZATION)));
+const commentsModel = new CommentsModel((new ApiService(END_POINT, AUTHORIZATION)));
+const filterModel = new FilterModel();
+
+const movieListPresenter = new MovieListPresenter(siteMainElement, filmsModel, filterModel, commentsModel);
+const filterPresenter = new FilterPresenter(siteMainElement, filterModel, filmsModel);
+
 render(siteHeaderElement, new UserLogoView(), RenderPosition.BEFOREEND);
-render(siteMainElement, new FilterView(filterFavoriteFilm, filterWatchedFilm, filterWatchFilm), RenderPosition.AFTERBEGIN);
-render(containerStatsElement, new FilmStatisticiew(FILM_COUNT), RenderPosition.BEFOREEND);
+
+
+const renderFooterElement = () => {
+  const films = filmsModel.films;
+  render(containerStatsElement, new FilmStatisticiew(films.length), RenderPosition.BEFOREEND);
+};
+
+filterPresenter.init();
+movieListPresenter.init();
+
 
 createUserStatsTemplate();
+filmsModel.init().finally(() => {
+  renderFooterElement();
+});
+

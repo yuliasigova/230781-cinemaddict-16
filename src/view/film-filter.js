@@ -1,32 +1,50 @@
 import ParentView from './abstract-view.js';
 
-const createFilterTemplate = (watchlistCount, historyCount, favoriteCount) =>
-  `<nav class="main-navigation">
+const createFilterItem = (filter, currentFilterType) => {
+  const {type, name, count} = filter;
+  return `<a href="#${name}"
+  class="main-navigation__item ${type === currentFilterType ? 'main-navigation__item--active' : ''}" data-filter-type="${type}">${name}
+  ${name !== 'All movies' ? `<span class="main-navigation__item-count">
+  ${count}</span>` : ''}
+  </a>`;
+};
+const createFilterTemplate = (filterItems, currentFilterType) => {
+  const filterItemsTemplate = filterItems
+    .map((filter) => createFilterItem(filter, currentFilterType)).join('');
+  return `<nav class="main-navigation">
     <div class="main-navigation__items">
-      <a href="#all" class="main-navigation__item main-navigation__item--active">All movies</a>
-      <a href="#watchlist" class="main-navigation__item">Watchlist <span class="main-navigation__item-count">
-      ${watchlistCount.length}</span></a>
-      <a href="#history" class="main-navigation__item">History <span class="main-navigation__item-count">
-      ${historyCount.length}</span></a>
-      <a href="#favorites" class="main-navigation__item">Favorites <span class="main-navigation__item-count">
-      ${favoriteCount.length}</span></a>
+    ${filterItemsTemplate}
     </div>
     <a href="#stats" class="main-navigation__additional">Stats</a>
   </nav>`;
+};
+
 
 export default class FilterView extends ParentView {
-    #watchlistCount = null;
-    #historyCount = null;
-    #favoriteCount = null;
+  #filter = null;
+  #currentFilter = null;
 
-    constructor(watchlistCount, historyCount, favoriteCount) {
-      super();
-      this.#watchlistCount = watchlistCount;
-      this.#historyCount = historyCount;
-      this.#favoriteCount = favoriteCount;
-    }
+  constructor(filter, currentFilterType) {
+    super();
+    this.#filter = filter;
+    this.#currentFilter = currentFilterType;
+  }
 
-    get template() {
-      return createFilterTemplate(this.#watchlistCount, this.#historyCount, this.#favoriteCount);
+  get template() {
+    return createFilterTemplate(this.#filter, this.#currentFilter);
+  }
+
+  setFilterTypeClickHandler = (callback) => {
+    this._callback.filterTypeChange = callback;
+    this.element.addEventListener('click', this.#filterTypeChangeHandler);
+  }
+
+  #filterTypeChangeHandler = (evt) => {
+    if (evt.target.tagName !== 'A') {
+      return;
     }
+    evt.preventDefault();
+    this._callback.filterTypeChange(evt.target.dataset.filterType);
+  }
+
 }
