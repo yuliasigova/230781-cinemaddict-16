@@ -14,7 +14,7 @@ const createFilmElement = (film) => {
     <p class="film-card__rating">${rating}</p>
     <p class="film-card__info">
       <span class="film-card__year">${dayjs(date).format('YYYY')}</span>
-      <span class="film-card__duration">${createTime(time)}</span>
+      <span class="film-card__duration">${createTime(time).hours}h ${createTime(time).minutes}m</span>
       <span class="film-card__genre">${genre[0]}</span>
     </p>
     <img src=${poster} alt="" class="film-card__poster">

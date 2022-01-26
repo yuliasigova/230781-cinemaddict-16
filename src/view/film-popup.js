@@ -77,7 +77,7 @@ const createFilmPopupElement = (data, filmComments) => {
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Runtime</td>
-              <td class="film-details__cell">${createTime(time)}</td>
+              <td class="film-details__cell">${createTime(time).hours}h ${createTime(time).minutes}m</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Country</td>
