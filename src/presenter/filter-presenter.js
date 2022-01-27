@@ -9,13 +9,16 @@ export default class FilterPresenter {
   #filmsModel = null;
 
   #filterComponent = null;
+  #changeBoard = null;
+  #menuType = null;
 
-  constructor(filterContainer, filterModel, filmsModel) {
+  constructor(filterContainer, filterModel, filmsModel, changeBoard) {
     this.#filterContainer = filterContainer;
     this.#filterModel = filterModel;
     this.#filmsModel = filmsModel;
     this.#filmsModel.addObserver(this.#handleModelEvent);
     this.#filterModel.addObserver(this.#handleModelEvent);
+    this.#changeBoard = changeBoard;
   }
 
   get filters() {
@@ -48,9 +51,9 @@ export default class FilterPresenter {
   init = () => {
     const filters = this.filters;
     const prevFilterComponent = this.#filterComponent;
-
-    this.#filterComponent = new FilterView(filters, this.#filterModel.filter);
+    this.#filterComponent = new FilterView(filters, this.#filterModel.filter, this.#menuType);
     this.#filterComponent.setFilterTypeClickHandler(this.#handleFilterTypeChange);
+    this.#filterComponent.setMenuTypeClickHandler(this.#handleMenuTypeClick);
 
     if (prevFilterComponent === null) {
       render(this.#filterContainer, this.#filterComponent, RenderPosition.AFTERBEGIN);
@@ -69,7 +72,13 @@ export default class FilterPresenter {
     if (this.#filterModel.filter === filterType) {
       return;
     }
-
     this.#filterModel.setFilter(UpdateType.MINOR, filterType);
+  }
+
+  #handleMenuTypeClick = (menuType) => {
+    if (this.#menuType !== menuType) {
+      this.#menuType = menuType;
+      this.#changeBoard(menuType);
+    }
   }
 }

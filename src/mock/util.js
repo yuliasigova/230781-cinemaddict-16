@@ -48,7 +48,6 @@ export const UserAction = {
 export const UpdateType = {
   PATCH: 'PATCH',
   MINOR: 'MINOR',
-  MAJOR: 'MAJOR',
   INIT: 'INIT',
 };
 
@@ -66,15 +65,23 @@ export const filter = {
   [FilterType.FAVORITES]: (films) => films.filter((film) => film.isFavorite),
 };
 
-export const createTime = (time) => {
-  const hours = Math.floor(time/60);
-  const minutes = time%60;
-  return `${hours}h ${minutes}m`;
-};
+export const createTime = (time) => ({
+  hours: Math.floor(time/60),
+  minutes: time%60,
+});
 
 export const MenuItem = {
-  FILMS: 'FILMS',
-  STATISTICS: 'STATISTICS',
+  FILMS: 'films',
+  STATISTICS: 'statistics',
 };
 
 export const EMOTIONS =[ 'smile', 'sleeping', 'puke', 'angry'];
+
+export const getTotalTime = (films) => {
+  if (films.length === 0) {
+    return '0';
+  }
+  return films.map((film) => film.time).reduce((a, b) => a + b, 0);
+};
+
+

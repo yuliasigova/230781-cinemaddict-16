@@ -15,7 +15,6 @@ export default class PopupPresenter {
     this.#filmPopupContainer = filmPopupContainer;
     this.#changeData = changeData;
     this.#commentsModel = commentsModel;
-    this.#commentsModel.addObserver(this.handleModelEvent);
   }
 
 

@@ -35,10 +35,6 @@ export default class MovieListPresenter {
     this.#filmsModel = filmsModel;
     this.#filterModel = filterModel;
     this.#commentsModel = commentsModel;
-
-    this.#filmsModel.addObserver(this.handleModelEvent);
-    this.#filterModel.addObserver(this.handleModelEvent);
-    this.#commentsModel.addObserver(this.handleModelEvent);
   }
 
   get films () {
@@ -56,7 +52,18 @@ export default class MovieListPresenter {
   }
 
   init = () => {
+    this.#filmsModel.addObserver(this.handleModelEvent);
+    this.#filterModel.addObserver(this.handleModelEvent);
+    this.#commentsModel.addObserver(this.handleModelEvent);
     this.#renderBoard();
+  }
+
+  destroy = () => {
+    this.#clearTaskList({resetSortType: true});
+
+    this.#filmsModel.removeObserver(this.handleModelEvent);
+    this.#filterModel.removeObserver(this.handleModelEvent);
+    this.#commentsModel.removeObserver(this.handleModelEvent);
   }
 
   #renderFilm = (film) => {
