@@ -137,7 +137,7 @@ export default class UserStatsView extends SmartView {
     this._data = {films: filterStats[this.#currentSort](films)};
 
     this.#setCharts();
-    this.setFilterItemChangeHandler();
+    this.#setFilterItemChangeHandler();
   }
 
   get template() {
@@ -150,7 +150,7 @@ export default class UserStatsView extends SmartView {
     this.#renderChart = renderChart(statisticCtx, films);
   }
 
-  setFilterItemChangeHandler = () => {
+  #setFilterItemChangeHandler = () => {
     this.element.querySelectorAll('.statistic__filters-input ').forEach((input) => input.addEventListener('change', this.#filterItemChangeHandler));
   }
 
@@ -164,7 +164,7 @@ export default class UserStatsView extends SmartView {
   };
 
   restoreHandlers = () => {
-    this.setFilterItemChangeHandler();
+    this.#setFilterItemChangeHandler();
     this.#setCharts();
   }
 }

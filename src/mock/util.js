@@ -48,6 +48,7 @@ export const UserAction = {
 export const UpdateType = {
   PATCH: 'PATCH',
   MINOR: 'MINOR',
+  MAJOR: 'MAJOR',
   INIT: 'INIT',
 };
 
@@ -84,4 +85,9 @@ export const getTotalTime = (films) => {
   return films.map((film) => film.time).reduce((a, b) => a + b, 0);
 };
 
+export const State = {
+  ADDING: 'ADDING',
+  DELETING: 'DELETING',
+  ABORTING: 'ABORTING'
+};
 

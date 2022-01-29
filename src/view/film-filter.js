@@ -5,7 +5,7 @@ const createFilterItem = (filter, currentFilterType) => {
   const {type, name, count} = filter;
   return `<a href="#${name}"
   class="main-navigation__item ${type === currentFilterType ? 'main-navigation__item--active' : ''}" data-filter-type="${type}" data-menu-type ="${MenuItem.FILMS}">${name}
-  ${name !== 'All movies' ? `<span class="main-navigation__item-count">
+  ${name !== 'All movies' ? `<span data-filter-type="${type}" class="main-navigation__item-count">
   ${count}</span>` : ''}
   </a>`;
 };
@@ -44,9 +44,6 @@ export default class FilterView extends ParentView {
   }
 
   #filterTypeChangeHandler = (evt) => {
-    if (evt.target.tagName !== 'A') {
-      return;
-    }
     evt.preventDefault();
     this._callback.filterTypeChange(evt.target.dataset.filterType);
   }
@@ -54,14 +51,11 @@ export default class FilterView extends ParentView {
   setMenuTypeClickHandler = (callback) => {
     this._callback.menuTypeChange = callback;
     this.element.addEventListener('click', this.#menuTypeChangeHandler);
-    this.element.querySelector('.main-navigation__additional').addEventListener('click', this.#menuTypeChangeHandler);
   }
 
   #menuTypeChangeHandler = (evt) => {
-    if (evt.target.tagName !== 'A') {
-      return;
-    }
     evt.preventDefault();
     this._callback.menuTypeChange(evt.target.dataset.menuType);
   }
+
 }
