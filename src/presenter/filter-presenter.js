@@ -69,16 +69,21 @@ export default class FilterPresenter {
   }
 
   #handleFilterTypeChange = (filterType) => {
+    if (!filterType) {
+      return;
+    }
     if (this.#filterModel.filter === filterType) {
       return;
     }
-    this.#filterModel.setFilter(UpdateType.MINOR, filterType);
+    this.#filterModel.setFilter(UpdateType.MAJOR, filterType);
   }
 
   #handleMenuTypeClick = (menuType) => {
     if (this.#menuType !== menuType) {
       this.#menuType = menuType;
+      this.init();
       this.#changeBoard(menuType);
     }
   }
+
 }

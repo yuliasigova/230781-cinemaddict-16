@@ -17,7 +17,7 @@ export default class CommentsModel extends AbstractObservable {
     try {
       this.#comments = await this.#apiService.getComments(filmId);
       return this.#comments;
-    } catch(err) {
+    } catch(error) {
       this.#comments = [];
     }
   }

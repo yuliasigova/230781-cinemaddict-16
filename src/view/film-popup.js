@@ -5,7 +5,7 @@ import { createTime, EMOTIONS } from '../mock/util.js';
 
 const createGenresContent = (genres) => genres.map((genre) => `<span class="film-details__genre">${genre}</span>`).join('');
 
-const addComments = (comments) => comments.map(({id, author, date, comment, emotion}) =>
+const addComments = (comments) => comments.map(({id, author, date, comment, emotion,}) =>
   `<li class="film-details__comment">
 <span class="film-details__comment-emoji">
   <img src='./images/emoji/${emotion}.png' width="55" height="55" alt="emoji-smile">
@@ -30,7 +30,7 @@ const createEmoji = () => EMOTIONS.map((emotion) =>
 const createGenre = (genre) => genre.length > 1 ? 'Genres' : 'Genre';
 
 const createFilmPopupElement = (data, filmComments) => {
-  const {title, originalTitle, poster, description, rating, director, writer, country, ageRating, actor, time, date, genre, isWatchlist, isWatched, isFavorite, isEmoji, isComment, comments} = data;
+  const {title, originalTitle, poster, description, rating, director, writer, country, ageRating, actor, time, date, genre, isWatchlist, isWatched, isFavorite, isEmoji, isComment, comments, isDisabled,} = data;
   const activeClassName = (status) => status ? 'film-details__control-button--active': '';
   const userComments = filmComments;
   return `<section class="film-details">
@@ -110,7 +110,7 @@ const createFilmPopupElement = (data, filmComments) => {
         <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${comments.length}</span></h3>
 
         <ul class="film-details__comments-list"></ul>
-          ${addComments(userComments)}
+        ${addComments(userComments)}
         <div class="film-details__new-comment">
           <div class="film-details__add-emoji-label">
           ${isEmoji ? `
@@ -118,7 +118,7 @@ const createFilmPopupElement = (data, filmComments) => {
           </div>
 
           <label class="film-details__comment-label">
-            <textarea class="film-details__comment-input" placeholder="Select reaction below and write comment here" name="comment">${he.encode(isComment === null ? '' : isComment)}</textarea>
+            <textarea class="film-details__comment-input" placeholder="Select reaction below and write comment here" name="comment" ${isDisabled ? 'disabled' : ''}>${he.encode(isComment === null ? '' : isComment)}</textarea>
           </label>
 
           <div class="film-details__emoji-list">
@@ -166,6 +166,9 @@ export default class FilmPopupView extends SmartView {
     evt.preventDefault();
     const idComment = evt.target.dataset.commentId;
     this._callback.deleteClick(idComment);
+    const deleteButton = this.element.querySelector(`[data-comment-id = "${idComment}"]`);
+    deleteButton.disabled = true;
+    deleteButton.textContent = 'Deleting...';
   }
 
   setAddCommentClickHandler = (callback) => {
@@ -219,13 +222,14 @@ export default class FilmPopupView extends SmartView {
   static parseFilmToData = (film) => ({...film,
     isEmoji: film.isEmoji,
     isComment: null,
+    isDisabled: false,
   });
 
   static parseDataToFilm = (data) => {
     const film = {...data};
     delete film.isEmoji;
     delete film.isComment;
-
+    delete film.isDisabled;
     return film;
   };
 
@@ -233,7 +237,6 @@ export default class FilmPopupView extends SmartView {
     this.element.querySelectorAll('.film-details__emoji-item').forEach((input) => input.addEventListener('change', this.#emojiClickHandler));
 
     this.element.querySelector('.film-details__comment-input').addEventListener('input', this.#commentInputHandler);
-
   };
 
   #emojiClickHandler = (evt) => {
