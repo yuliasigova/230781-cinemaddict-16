@@ -22,7 +22,7 @@ export const UserRank = {
   FAN: {
     MIN: 11,
     MAX: 20,
-    RANK: 'Fan'
+    RANK: 'Fan',
   },
   MOVIE_BUFF: {
     MIN: 21,

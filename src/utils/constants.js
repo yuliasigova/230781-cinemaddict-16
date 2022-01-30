@@ -36,6 +36,6 @@ export const EMOTIONS =[ 'smile', 'sleeping', 'puke', 'angry'];
 export const State = {
   ADDING: 'ADDING',
   DELETING: 'DELETING',
-  ABORTING: 'ABORTING'
+  ABORTING: 'ABORTING',
 };
 
