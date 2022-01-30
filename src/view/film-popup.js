@@ -1,9 +1,8 @@
 import dayjs from 'dayjs';
 import he from 'he';
 import SmartView from './smart-view.js';
-import { createTime, EMOTIONS } from '../mock/util.js';
-
-const createGenresContent = (genres) => genres.map((genre) => `<span class="film-details__genre">${genre}</span>`).join('');
+import { EMOTIONS } from '../utils/constants.js';
+import { createTime, createGenresContent } from '../utils/common.js';
 
 const addComments = (comments) => comments.map(({id, author, date, comment, emotion,}) =>
   `<li class="film-details__comment">

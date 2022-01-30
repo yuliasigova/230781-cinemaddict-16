@@ -1,5 +1,5 @@
-import AbstractObservable from '../mock/abstract-observable';
-import { UpdateType } from '../mock/util';
+import AbstractObservable from '../utils/abstract-observable.js';
+import { UpdateType } from '../utils/constants.js';
 
 export default class FilmsModel extends AbstractObservable {
   #films = [];

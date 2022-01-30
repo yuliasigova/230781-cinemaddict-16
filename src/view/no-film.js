@@ -1,5 +1,5 @@
 import ParentView from './abstract-view.js';
-import { FilterType } from '../mock/util.js';
+import { FilterType } from '../utils/constants.js';
 
 const NoTasksTextType = {
   [FilterType.ALL]: 'There are no movies in our database',

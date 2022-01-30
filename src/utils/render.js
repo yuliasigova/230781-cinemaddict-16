@@ -1,4 +1,4 @@
-import ParentView from './view/abstract-view.js';
+import ParentView from '../view/abstract-view.js';
 
 export const RenderPosition = {
   BEFOREBEGIN: 'beforebegin',

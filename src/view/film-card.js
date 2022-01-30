@@ -1,9 +1,6 @@
 import dayjs from 'dayjs';
 import ParentView from './abstract-view.js';
-import { createTime } from '../mock/util.js';
-
-const createDescription = (description) => description.length > 140 ? `${description.slice(0, 139)}...` : description;
-
+import { createTime, createDescription} from '../utils/common.js';
 
 const createFilmElement = (film) => {
   const {id, title, poster, description, rating, date, time, genre, isWatchlist, isWatched, isFavorite, comments} = film;
