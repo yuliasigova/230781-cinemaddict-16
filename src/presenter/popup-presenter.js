@@ -1,6 +1,6 @@
-import { render, RenderPosition, remove} from '../render';
-import FilmPopupView from '../view/film-popup';
-import {isEscKey, UserAction, UpdateType, State} from '../mock/util';
+import { render, RenderPosition, remove } from '../utils/render.js';
+import FilmPopupView from '../view/film-popup.js';
+import {isEscKey, UserAction, UpdateType, State} from '../utils/constants.js';
 
 export default class PopupPresenter {
   #filmPopupContainer = null;
@@ -73,15 +73,15 @@ export default class PopupPresenter {
   #onEscKeyDown = (evt) => {
     if (isEscKey(evt)) {
       evt.preventDefault();
-      this.destroy();
+      this.#destroy();
     }
   }
 
   #popupClickHandler = () => {
-    this.destroy();
+    this.#destroy();
   }
 
-  destroy = () => {
+  #destroy = () => {
     if (this.#filmPopupComponent === null){
       return;
     }

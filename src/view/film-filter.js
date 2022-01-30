@@ -1,5 +1,5 @@
 import ParentView from './abstract-view.js';
-import { MenuItem } from '../mock/util.js';
+import { MenuItem } from '../utils/constants.js';
 
 const createFilterItem = (filter, currentFilterType) => {
   const {type, name, count} = filter;

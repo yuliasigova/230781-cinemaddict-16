@@ -1,8 +1,8 @@
 import SmartView from './smart-view.js';
 import Chart from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { createTime, getTotalTime  } from '../mock/util.js';
-import { filterStats, StatsFilterType, getUserRank, getGenres, getFirstGenre} from '../mock/stats.js';
+import { createTime, getTotalTime  } from '../utils/common.js';
+import { filterStats, StatsFilterType, getUserRank, getGenres, getFirstGenre} from '../utils/stats.js';
 
 const renderChart = (statisticCtx, films) => {
   const BAR_HEIGHT = 50;

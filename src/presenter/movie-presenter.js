@@ -1,6 +1,6 @@
-import { render, RenderPosition, remove} from '../render';
-import FilmView from '../view/film-card';
-import { UserAction, UpdateType} from '../mock/util';
+import { render, RenderPosition, remove} from '../utils/render.js';
+import FilmView from '../view/film-card.js';
+import { UserAction, UpdateType} from '../utils/constants.js';
 
 export default class MoviePresenter {
   #filmListContainer = null;

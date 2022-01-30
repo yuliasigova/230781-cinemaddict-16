@@ -1,5 +1,5 @@
 import ParentView from './abstract-view.js';
-import { getUserRank } from '../mock/stats.js';
+import { getUserRank } from '../utils/stats.js';
 
 const createUserLogoTemplate = (films) =>
   `<section class="header__profile profile">

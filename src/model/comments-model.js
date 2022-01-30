@@ -1,4 +1,4 @@
-import AbstractObservable from '../mock/abstract-observable';
+import AbstractObservable from '../utils/abstract-observable.js';
 
 export default class CommentsModel extends AbstractObservable {
   #comments = [];

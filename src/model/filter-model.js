@@ -1,5 +1,5 @@
-import AbstractObservable from '../mock/abstract-observable';
-import { FilterType } from '../mock/util.js';
+import AbstractObservable from '../utils/abstract-observable.js';
+import { FilterType } from '../utils/constants.js';
 
 export default class FilterModel extends AbstractObservable {
   #filter = FilterType.ALL;

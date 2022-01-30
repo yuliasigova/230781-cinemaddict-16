@@ -1,5 +1,5 @@
 import ParentView from './abstract-view.js';
-import { SortType } from '../mock/util.js';
+import { SortType } from '../utils/constants.js';
 
 const createSortTemplate = (currentSortType) =>
   `<ul class="sort">

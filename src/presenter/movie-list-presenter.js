@@ -1,14 +1,15 @@
-import { remove, render, RenderPosition } from '../render';
-import NoFilmView from '../view/no-film';
-import SortView from '../view/film-sort';
-import FilmsContainerView from '../view/film-container';
-import FilmsListContainerView from '../view/film-list-container';
-import LoadMoreButtonView  from '../view/load-more-button';
-import MoviePresenter from './movie-presenter';
-import UserLogoView  from '../view/user-logo';
-import { SortType, sortFilmsDate, sortFilmsRating, UpdateType, UserAction, filter, FilterType, State} from '../mock/util';
-import PopupPresenter from './popup-presenter';
-import LoadingView from '../view/loading-view';
+import { remove, render, RenderPosition } from '../utils/render.js';
+import NoFilmView from '../view/no-film.js';
+import SortView from '../view/film-sort.js';
+import FilmsContainerView from '../view/film-container.js';
+import FilmsListContainerView from '../view/film-list-container.js';
+import LoadMoreButtonView  from '../view/load-more-button.js';
+import MoviePresenter from './movie-presenter.js';
+import UserLogoView  from '../view/user-logo.js';
+import { SortType, UpdateType, UserAction, FilterType, State } from '../utils/constants.js';
+import { sortFilmsDate, sortFilmsRating, filter } from '../utils/common.js';
+import PopupPresenter from './popup-presenter.js';
+import LoadingView from '../view/loading-view.js';
 const FILM_COUNT_PER_STEP = 5;
 
 
@@ -163,8 +164,6 @@ export default class MovieListPresenter {
     const filmsCount = this.films.length;
     this.#moviePresenter.forEach((movie) => movie.destroy());
     this.#moviePresenter.clear();
-    //this.#popupPresenter.destroy();
-    //очистить попап презентеры, сохранив тот который открыт
     remove(this.#loadingComponent);
     remove(this.#sortComponent);
     remove(this.#filmsComponent);
@@ -217,8 +216,6 @@ export default class MovieListPresenter {
       case UpdateType.MINOR:
         this.#clearBoard();
         this.#renderBoard();
-        //если есть открытый попап то мы его открываем заново по id
-        //очищаем переменную с сохраненным попапом
         if (this.#popupPresenter === null) {
           return;
         }

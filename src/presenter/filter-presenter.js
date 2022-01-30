@@ -1,7 +1,7 @@
 import FilterView from '../view/film-filter.js';
-import { remove, render, RenderPosition } from '../render.js';
-import {filter, FilterType, UpdateType} from '../mock/util.js';
-
+import { remove, render, RenderPosition } from '../utils/render.js';
+import { filter } from '../utils/common.js';
+import { FilterType, UpdateType } from '../utils/constants.js';
 
 export default class FilterPresenter {
   #filterContainer = null;
