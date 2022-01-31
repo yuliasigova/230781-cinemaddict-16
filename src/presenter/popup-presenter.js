@@ -1,5 +1,5 @@
 import { render, RenderPosition, remove } from '../utils/render.js';
-import FilmPopupView from '../view/film-popup.js';
+import FilmPopupView from '../view/film-popup-view.js';
 import {isEscKey, UserAction, UpdateType, State} from '../utils/constants.js';
 
 export default class PopupPresenter {
@@ -52,6 +52,25 @@ export default class PopupPresenter {
 
   }
 
+  checkPopup = () => this.#isOpen;
+
+  setViewState = (state) => {
+    switch (state) {
+      case State.ADDING:
+        this.#filmPopupComponent.updateData({
+          isDisabled: true,
+        });
+        break;
+      case State.DELETING:
+        this.#filmPopupComponent.updateData({
+          isDisabled: true,
+        });
+        break;
+      case State.ABORTING:
+        this.#filmPopupComponent.shake(this.#resetFormState);
+    }
+  }
+
   #watchlistClickHandler = () => {
     this.#changeData(
       UserAction.UPDATE_FILM,
@@ -92,8 +111,6 @@ export default class PopupPresenter {
     document.removeEventListener('keydown', this.#onEscKeyDown);
   }
 
-  checkPopup = () => this.#isOpen;
-
   #buttonRemoveCommentClickHandler = (id) =>{
     const update = this.#comments.find((comment) => comment.id === id);
     this.#changeData(
@@ -113,21 +130,4 @@ export default class PopupPresenter {
       isDisabled: false,
     });
   };
-
-  setViewState = (state) => {
-    switch (state) {
-      case State.ADDING:
-        this.#filmPopupComponent.updateData({
-          isDisabled: true,
-        });
-        break;
-      case State.DELETING:
-        this.#filmPopupComponent.updateData({
-          isDisabled: true,
-        });
-        break;
-      case State.ABORTING:
-        this.#filmPopupComponent.shake(this.#resetFormState);
-    }
-  }
 }

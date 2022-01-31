@@ -20,8 +20,8 @@ const addComments = (comments) => comments.map(({id, author, date, comment, emot
 </li>`).join('');
 
 
-const createEmoji = () => EMOTIONS.map((emotion) =>
-  `<input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-${emotion}" value="${emotion}">
+const createEmoji = (isDisabled) => EMOTIONS.map((emotion) =>
+  `<input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-${emotion}" value="${emotion}" ${isDisabled ? 'disabled' : ''}>
   <label class="film-details__emoji-label" for="emoji-${emotion}">
   <img src="./images/emoji/${emotion}.png" width="30" height="30" alt="${emotion}">
   </label>`).join('');
@@ -42,7 +42,7 @@ const createFilmPopupElement = (data, filmComments) => {
         <div class="film-details__poster">
           <img class="film-details__poster-img" src=${poster} alt="">
 
-          <p class="film-details__age">${ageRating}</p>
+          <p class="film-details__age">${ageRating}+</p>
         </div>
 
         <div class="film-details__info">
@@ -121,7 +121,7 @@ const createFilmPopupElement = (data, filmComments) => {
           </label>
 
           <div class="film-details__emoji-list">
-          ${createEmoji()}
+          ${createEmoji(isDisabled)}
           </div>
         </div>
       </section>
@@ -146,19 +146,55 @@ export default class FilmPopupView extends SmartView {
     return createFilmPopupElement(this._data, this.#comments);
   }
 
+  restoreHandlers = () => {
+    this.setInnerHandlers();
+    this.setPopupClickHandler(this._callback.popupClick);
+    this.setWatchlistPopupClickHandler(this._callback.watchlistPopupClick);
+    this.setWatchedPopupClickHandler(this._callback.watchedPopupClick);
+    this.setFavoritePopupClickHandler(this._callback.favoritePopupClick);
+    this.setDeleteCommentClickHandler(this._callback.deleteClick);
+    this.setAddCommentClickHandler(this._callback.addComment);
+  };
+
   setPopupClickHandler = (callback) => {
     this._callback.popupClick = callback;
     this.element.querySelector('.film-details__close-btn').addEventListener('click', this.#popupClickHandler);
   }
 
-  #popupClickHandler = (evt) => {
-    evt.preventDefault();
-    this._callback.popupClick(FilmPopupView.parseDataToFilm(this._data));
-  }
-
   setDeleteCommentClickHandler = (callback) => {
     this._callback.deleteClick = callback;
     this.element.querySelectorAll('.film-details__comment-delete').forEach((button) => button.addEventListener('click', this.#deleteCommentClickHandler));
+  }
+
+  setAddCommentClickHandler = (callback) => {
+    this._callback.addComment = callback;
+    this.element.querySelector('form').addEventListener('keydown', this.#formKeydownHandler);
+  }
+
+  setWatchlistPopupClickHandler = (callback) => {
+    this._callback.watchlistPopupClick = callback;
+    this.element.querySelector('.film-details__control-button--watchlist').addEventListener('click', this.#watchlistPopupClickHandler);
+  }
+
+  setWatchedPopupClickHandler = (callback) => {
+    this._callback.watchedPopupClick = callback;
+    this.element.querySelector('.film-details__control-button--watched').addEventListener('click', this.#watchedPopupClickHandler);
+  }
+
+  setFavoritePopupClickHandler = (callback) => {
+    this._callback.favoritePopupClick = callback;
+    this.element.querySelector('.film-details__control-button--favorite').addEventListener('click', this.#favoritePopupClickHandler);
+  }
+
+  setInnerHandlers = () => {
+    this.element.querySelectorAll('.film-details__emoji-item').forEach((input) => input.addEventListener('change', this.#emojiClickHandler));
+
+    this.element.querySelector('.film-details__comment-input').addEventListener('input', this.#commentInputHandler);
+  };
+
+  #popupClickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.popupClick(FilmPopupView.parseDataToFilm(this._data));
   }
 
   #deleteCommentClickHandler = (evt) => {
@@ -168,11 +204,6 @@ export default class FilmPopupView extends SmartView {
     const deleteButton = this.element.querySelector(`[data-comment-id = "${idComment}"]`);
     deleteButton.disabled = true;
     deleteButton.textContent = 'Deleting...';
-  }
-
-  setAddCommentClickHandler = (callback) => {
-    this._callback.addComment = callback;
-    this.element.querySelector('form').addEventListener('keydown', this.#formKeydownHandler);
   }
 
   #formKeydownHandler = (evt) => {
@@ -188,19 +219,9 @@ export default class FilmPopupView extends SmartView {
     }
   }
 
-  setWatchlistPopupClickHandler = (callback) => {
-    this._callback.watchlistPopupClick = callback;
-    this.element.querySelector('.film-details__control-button--watchlist').addEventListener('click', this.#watchlistPopupClickHandler);
-  }
-
   #watchlistPopupClickHandler = (evt) => {
     evt.preventDefault();
     this._callback.watchlistPopupClick();
-  }
-
-  setWatchedPopupClickHandler = (callback) => {
-    this._callback.watchedPopupClick = callback;
-    this.element.querySelector('.film-details__control-button--watched').addEventListener('click', this.#watchedPopupClickHandler);
   }
 
   #watchedPopupClickHandler = (evt) => {
@@ -208,35 +229,10 @@ export default class FilmPopupView extends SmartView {
     this._callback.watchedPopupClick();
   }
 
-  setFavoritePopupClickHandler = (callback) => {
-    this._callback.favoritePopupClick = callback;
-    this.element.querySelector('.film-details__control-button--favorite').addEventListener('click', this.#favoritePopupClickHandler);
-  }
-
   #favoritePopupClickHandler = (evt) => {
     evt.preventDefault();
     this._callback.favoritePopupClick();
   }
-
-  static parseFilmToData = (film) => ({...film,
-    isEmoji: film.isEmoji,
-    isComment: null,
-    isDisabled: false,
-  });
-
-  static parseDataToFilm = (data) => {
-    const film = {...data};
-    delete film.isEmoji;
-    delete film.isComment;
-    delete film.isDisabled;
-    return film;
-  };
-
-  setInnerHandlers = () => {
-    this.element.querySelectorAll('.film-details__emoji-item').forEach((input) => input.addEventListener('change', this.#emojiClickHandler));
-
-    this.element.querySelector('.film-details__comment-input').addEventListener('input', this.#commentInputHandler);
-  };
 
   #emojiClickHandler = (evt) => {
     evt.preventDefault();
@@ -252,14 +248,17 @@ export default class FilmPopupView extends SmartView {
     }, true);
   }
 
-  restoreHandlers = () => {
-    this.setInnerHandlers();
-    this.setPopupClickHandler(this._callback.popupClick);
-    this.setWatchlistPopupClickHandler(this._callback.watchlistPopupClick);
-    this.setWatchedPopupClickHandler(this._callback.watchedPopupClick);
-    this.setFavoritePopupClickHandler(this._callback.favoritePopupClick);
-    this.setDeleteCommentClickHandler(this._callback.deleteClick);
-    this.setAddCommentClickHandler(this._callback.addComment);
-  };
+  static parseFilmToData = (film) => ({...film,
+    isEmoji: film.isEmoji,
+    isComment: null,
+    isDisabled: false,
+  });
 
+  static parseDataToFilm = (data) => {
+    const film = {...data};
+    delete film.isEmoji;
+    delete film.isComment;
+    delete film.isDisabled;
+    return film;
+  };
 }

@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import ParentView from './abstract-view.js';
+import ParentView from './parent-view.js';
 import { createTime, createDescription} from '../utils/common.js';
 
 const createFilmElement = (film) => {
@@ -43,19 +43,9 @@ export default class FilmView extends ParentView {
     this.element.querySelector('.film-card__link').addEventListener('click', this.#filmClickHandler);
   }
 
-  #filmClickHandler = (evt) => {
-    evt.preventDefault();
-    this._callback.filmClick();
-  }
-
   setWatchlistButtonClickHandler = (callback) => {
     this._callback.watchlistButtonClick = callback;
     this.element.querySelector('.film-card__controls-item--add-to-watchlist').addEventListener('click', this.#watchlistButtonClickHandler);
-  }
-
-  #watchlistButtonClickHandler = (evt) => {
-    evt.preventDefault();
-    this._callback.watchlistButtonClick();
   }
 
   setWatchedButtonClickHandler = (callback) => {
@@ -63,14 +53,24 @@ export default class FilmView extends ParentView {
     this.element.querySelector('.film-card__controls-item--mark-as-watched').addEventListener('click', this.#watchedButtonClickHandler);
   }
 
-  #watchedButtonClickHandler = (evt) => {
-    evt.preventDefault();
-    this._callback.watchedButtonClick();
-  }
-
   setFavoriteButtonClickHandler = (callback) => {
     this._callback.favoriteButtonClick = callback;
     this.element.querySelector('.film-card__controls-item--favorite').addEventListener('click', this.#favoriteButtonClickHandler);
+  }
+
+  #filmClickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.filmClick();
+  }
+
+  #watchlistButtonClickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.watchlistButtonClick();
+  }
+
+  #watchedButtonClickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.watchedButtonClick();
   }
 
   #favoriteButtonClickHandler = (evt) => {

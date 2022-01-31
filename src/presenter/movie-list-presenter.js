@@ -1,11 +1,11 @@
 import { remove, render, RenderPosition } from '../utils/render.js';
-import NoFilmView from '../view/no-film.js';
-import SortView from '../view/film-sort.js';
-import FilmsContainerView from '../view/film-container.js';
-import FilmsListContainerView from '../view/film-list-container.js';
-import LoadMoreButtonView  from '../view/load-more-button.js';
+import NoFilmView from '../view/no-film-view.js';
+import SortView from '../view/sort-view.js';
+import FilmsContainerView from '../view/films-container-view.js';
+import FilmsListContainerView from '../view/film-list-container-view.js';
+import LoadMoreButtonView  from '../view/load-more-button-view.js';
 import MoviePresenter from './movie-presenter.js';
-import UserLogoView  from '../view/user-logo.js';
+import UserLogoView  from '../view/user-logo-view.js';
 import { SortType, UpdateType, UserAction, FilterType, State } from '../utils/constants.js';
 import { sortFilmsDate, sortFilmsRating, filter } from '../utils/common.js';
 import PopupPresenter from './popup-presenter.js';
@@ -56,18 +56,18 @@ export default class MovieListPresenter {
   }
 
   init = () => {
-    this.#filmsModel.addObserver(this.handleModelEvent);
-    this.#filterModel.addObserver(this.handleModelEvent);
-    this.#commentsModel.addObserver(this.handleModelEvent);
+    this.#filmsModel.addObserver(this.#handleModelEvent);
+    this.#filterModel.addObserver(this.#handleModelEvent);
+    this.#commentsModel.addObserver(this.#handleModelEvent);
     this.#renderBoard();
   }
 
   destroy = () => {
     this.#clearBoard({resetSortType: true, resetRenderedFilmCount: true});
 
-    this.#filmsModel.removeObserver(this.handleModelEvent);
-    this.#filterModel.removeObserver(this.handleModelEvent);
-    this.#commentsModel.removeObserver(this.handleModelEvent);
+    this.#filmsModel.removeObserver(this.#handleModelEvent);
+    this.#filterModel.removeObserver(this.#handleModelEvent);
+    this.#commentsModel.removeObserver(this.#handleModelEvent);
   }
 
   #renderFilm = (film) => {
@@ -207,7 +207,7 @@ export default class MovieListPresenter {
     }
   }
 
-  handleModelEvent = (updateType, data) => {
+  #handleModelEvent = (updateType, data) => {
     switch (updateType) {
       case UpdateType.PATCH:
         this.#moviePresenter.get(data.id).init(data);

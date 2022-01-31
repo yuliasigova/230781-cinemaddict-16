@@ -1,6 +1,6 @@
-import AbstractView from './abstract-view.js';
+import ParentView from './parent-view.js';
 
-export default class SmartView extends AbstractView {
+export default class SmartView extends ParentView {
   _data = {};
 
   updateData = (update, justDataUpdating) => {

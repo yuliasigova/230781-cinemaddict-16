@@ -1,4 +1,4 @@
-import ParentView from './abstract-view.js';
+import ParentView from './parent-view.js';
 import { MenuItem } from '../utils/constants.js';
 
 const createFilterItem = (filter, currentFilterType) => {
@@ -43,19 +43,18 @@ export default class FilterView extends ParentView {
     this.element.addEventListener('click', this.#filterTypeChangeHandler);
   }
 
-  #filterTypeChangeHandler = (evt) => {
-    evt.preventDefault();
-    this._callback.filterTypeChange(evt.target.dataset.filterType);
-  }
-
   setMenuTypeClickHandler = (callback) => {
     this._callback.menuTypeChange = callback;
     this.element.addEventListener('click', this.#menuTypeChangeHandler);
+  }
+
+  #filterTypeChangeHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.filterTypeChange(evt.target.dataset.filterType);
   }
 
   #menuTypeChangeHandler = (evt) => {
     evt.preventDefault();
     this._callback.menuTypeChange(evt.target.dataset.menuType);
   }
-
 }

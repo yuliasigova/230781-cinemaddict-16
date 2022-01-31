@@ -39,3 +39,7 @@ export const State = {
   ABORTING: 'ABORTING',
 };
 
+export const Color = {
+  CHART_COLOR: '#ffe800',
+  FONT_COLOR: '#ffffff',
+};

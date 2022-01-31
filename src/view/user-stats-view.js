@@ -3,9 +3,11 @@ import Chart from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { createTime, getTotalTime  } from '../utils/common.js';
 import { filterStats, StatsFilterType, getUserRank, getGenres, getFirstGenre} from '../utils/stats.js';
+import { Color } from '../utils/constants.js';
+
+const BAR_HEIGHT = 50;
 
 const renderChart = (statisticCtx, films) => {
-  const BAR_HEIGHT = 50;
   const genres = [];
   const genresCounts = [];
 
@@ -13,7 +15,6 @@ const renderChart = (statisticCtx, films) => {
     genres.push(name);
     genresCounts.push(count);
   });
-
   statisticCtx.height = BAR_HEIGHT * genres.length;
 
   return new Chart(statisticCtx, {
@@ -23,8 +24,8 @@ const renderChart = (statisticCtx, films) => {
       labels: genres,
       datasets: [{
         data: genresCounts,
-        backgroundColor: '#ffe800',
-        hoverBackgroundColor: '#ffe800',
+        backgroundColor: Color.CHART_COLOR,
+        hoverBackgroundColor: Color.CHART_COLOR,
         anchor: 'start',
         barThickness: 24,
       }],
@@ -36,7 +37,7 @@ const renderChart = (statisticCtx, films) => {
           font: {
             size: 20,
           },
-          color: '#ffffff',
+          color: Color.FONT_COLOR,
           anchor: 'start',
           align: 'start',
           offset: 40,
@@ -45,7 +46,7 @@ const renderChart = (statisticCtx, films) => {
       scales: {
         yAxes: [{
           ticks: {
-            fontColor: '#ffffff',
+            fontColor: Color.FONT_COLOR,
             padding: 100,
             fontSize: 20,
           },
@@ -144,6 +145,11 @@ export default class UserStatsView extends SmartView {
     return createUserStatsTemplate(this._data, this.#currentSort);
   }
 
+  restoreHandlers = () => {
+    this.#setFilterItemChangeHandler();
+    this.#setCharts();
+  }
+
   #setCharts = () => {
     const {films} = this._data;
     const statisticCtx = this.element.querySelector('.statistic__chart');
@@ -162,10 +168,5 @@ export default class UserStatsView extends SmartView {
     this.updateElement();
     this._data = {films};
   };
-
-  restoreHandlers = () => {
-    this.#setFilterItemChangeHandler();
-    this.#setCharts();
-  }
 }
 

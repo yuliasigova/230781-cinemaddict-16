@@ -1,4 +1,4 @@
-import ParentView from './abstract-view.js';
+import ParentView from './parent-view.js';
 
 const createLoadingTemplate = () => `<section class="films">
   <section class="films-list">

@@ -1,4 +1,4 @@
-import ParentView from './abstract-view.js';
+import ParentView from './parent-view.js';
 import { SortType } from '../utils/constants.js';
 
 const createSortTemplate = (currentSortType) =>

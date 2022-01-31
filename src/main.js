@@ -1,12 +1,12 @@
 import { render, RenderPosition, remove } from './utils/render.js';
 import { MenuItem } from './utils/constants.js';
 import MovieListPresenter from './presenter/movie-list-presenter.js';
-import FilmStatisticiew from './view/film-stats.js';
-import FilmsModel from './model/movies-model.js';
+import TotalFilmsView from './view/total-films-view.js';
+import FilmsModel from './model/films-model.js';
 import FilterModel from './model/filter-model.js';
 import CommentsModel from './model/comments-model.js';
 import FilterPresenter from './presenter/filter-presenter.js';
-import UserStatsView from './view/user-statistic.js';
+import UserStatsView from './view/user-stats-view.js';
 import ApiService from './service/api-service.js';
 
 const siteMainElement = document.querySelector('.main');
@@ -44,7 +44,7 @@ const filterPresenter = new FilterPresenter(siteMainElement, filterModel, filmsM
 
 const renderFooterElement = () => {
   const films = filmsModel.films;
-  render(containerStatsElement, new FilmStatisticiew(films.length), RenderPosition.BEFOREEND);
+  render(containerStatsElement, new TotalFilmsView(films.length), RenderPosition.BEFOREEND);
 };
 
 filterPresenter.init();

@@ -1,4 +1,4 @@
-import ParentView from './abstract-view.js';
+import ParentView from './parent-view.js';
 
 const createLoadMoreButtonTemplate = () =>
   `<button class="films-list__show-more">

@@ -1,4 +1,4 @@
-import FilterView from '../view/film-filter.js';
+import FilterView from '../view/filter-view.js';
 import { remove, render, RenderPosition } from '../utils/render.js';
 import { filter } from '../utils/common.js';
 import { FilterType, UpdateType } from '../utils/constants.js';

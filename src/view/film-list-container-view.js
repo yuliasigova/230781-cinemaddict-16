@@ -1,4 +1,4 @@
-import ParentView from './abstract-view.js';
+import ParentView from './parent-view.js';
 
 const createFilmsListContainerElement = () =>
   `<div class="films-list__container">

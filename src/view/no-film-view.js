@@ -1,4 +1,4 @@
-import ParentView from './abstract-view.js';
+import ParentView from './parent-view.js';
 import { FilterType } from '../utils/constants.js';
 
 const NoTasksTextType = {

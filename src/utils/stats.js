@@ -58,20 +58,17 @@ export const getUserRank = (films) => {
   }
 };
 
-const makeItemsUniq = (items) => [...new Set(items)];
-
 export const getGenres = (films) => {
-  let filmGenres = [];
-  films.map((film) => film.genre)
-    .forEach((genres) => {
-      filmGenres = filmGenres.concat((genres));
+  const filmGenres = {};
+  films.reduce((array, film) => array.concat(film.genre), [])
+    .forEach((genre) => {
+      if (filmGenres[genre]) {
+        filmGenres[genre]++;
+        return;
+      }
+      filmGenres[genre] = 1;
     });
-
-  const uniqGenres = makeItemsUniq(filmGenres);
-  const genreCounts = uniqGenres.map((genre) =>(filmGenres.filter((genres) => genres === genre).length));
-  const result = uniqGenres.reduce((o, k, i) => ({...o, [k]: genreCounts[i]}), {});
-  const resultSorted = Object.entries(result).sort((a,b)=>b[1]-a[1]);
-  return resultSorted;
+  return Object.entries(filmGenres).sort((a,b)=>b[1]-a[1]);
 };
 
 export const getFirstGenre = (films) =>{

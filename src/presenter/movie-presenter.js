@@ -1,5 +1,5 @@
 import { render, RenderPosition, remove} from '../utils/render.js';
-import FilmView from '../view/film-card.js';
+import FilmView from '../view/film-view.js';
 import { UserAction, UpdateType} from '../utils/constants.js';
 
 export default class MoviePresenter {
@@ -38,6 +38,14 @@ export default class MoviePresenter {
     remove(prevFilmComponent);
   }
 
+  destroy = () => {
+    remove(this.#filmComponent);
+  }
+
+  setFilmPopup = (initPopup) => {
+    this.#initPopup = initPopup;
+  }
+
   #watchlistClickHandler = () => {
     this.#changeData(
       UserAction.UPDATE_FILM,
@@ -59,13 +67,4 @@ export default class MoviePresenter {
   #addFilmPopup = () => {
     this.#initPopup();
   }
-
-  setFilmPopup = (initPopup) => {
-    this.#initPopup = initPopup;
-  }
-
-  destroy = () => {
-    remove(this.#filmComponent);
-  }
-
 }
